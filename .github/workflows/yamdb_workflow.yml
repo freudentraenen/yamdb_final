@@ -48,7 +48,7 @@ jobs:
         with:
           file: ../api_yamdb/Dockerfile
           push: true
-          tags: freudentraenen/api_yamdb:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/api_yamdb:latest
 
   deploy:
     runs-on: ubuntu-latest
