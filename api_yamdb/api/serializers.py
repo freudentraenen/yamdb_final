@@ -2,10 +2,9 @@ from decimal import ROUND_HALF_UP
 
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-
+from reviews.models import Category, Comment, Genre, Review, Title
 from users.models import User
 from users.validators import validate_username
-from reviews.models import Category, Comment, Genre, Review, Title
 
 
 class UsersSerializer(serializers.ModelSerializer):

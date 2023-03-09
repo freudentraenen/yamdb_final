@@ -1,8 +1,8 @@
-from string import ascii_lowercase, ascii_uppercase, digits
 from random import choices
+from string import ascii_lowercase, ascii_uppercase, digits
 
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 

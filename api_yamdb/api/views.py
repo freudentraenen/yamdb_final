@@ -1,30 +1,29 @@
-from string import ascii_lowercase, ascii_uppercase, digits
 from random import choices
+from string import ascii_lowercase, ascii_uppercase, digits
 
-from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMessage
+from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.viewsets import ModelViewSet
-
-from reviews.models import Review, Title, Category, Genre
+from rest_framework_simplejwt.tokens import RefreshToken
+from reviews.models import Category, Genre, Review, Title
 from users.models import User
+
 from .filters import TitleFilter
 from .mixins import ModelMixinSet
-from .permissions import (AdminOnly, AdminModeratorAuthorPermission,
+from .permissions import (AdminModeratorAuthorPermission, AdminOnly,
                           IsAdminUserOrReadOnly)
-from .serializers import (UsersSerializer, SignUpSerializer,
-                          GetTokenSerializer, NotAdminSerializer,
-                          CategorySerializer, GenreSerializer,
-                          TitleReadSerializer, TitleCreateSerializer,
-                          ReviewSerializer, CommentSerializer)
+from .serializers import (CategorySerializer, CommentSerializer,
+                          GenreSerializer, GetTokenSerializer,
+                          NotAdminSerializer, ReviewSerializer,
+                          SignUpSerializer, TitleCreateSerializer,
+                          TitleReadSerializer, UsersSerializer)
 
 
 class UsersViewSet(viewsets.ModelViewSet):
@@ -167,13 +166,11 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def get_title(self):
         title_id = self.kwargs.get('title_id')
-        title = get_object_or_404(Title, id=title_id)
-        return title
+        return get_object_or_404(Title, id=title_id)
 
     def get_queryset(self):
         title = self.get_title()
-        new_queryset = title.reviews.all()
-        return new_queryset
+        return title.reviews.all()
 
     def perform_create(self, serializer):
         serializer.save(
@@ -194,13 +191,11 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def get_review(self):
         review_id = self.kwargs.get('review_id')
-        review = get_object_or_404(Review, id=review_id)
-        return review
+        return get_object_or_404(Review, id=review_id)
 
     def get_queryset(self):
         review = self.get_review()
-        new_queryset = review.comments.all()
-        return new_queryset
+        return review.comments.all()
 
     def perform_create(self, serializer):
         serializer.save(

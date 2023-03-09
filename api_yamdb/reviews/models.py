@@ -1,8 +1,8 @@
-from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
 from django.db.models import Avg
-
 from users.models import User
+
 from .validators import validate_year
 
 
@@ -80,8 +80,7 @@ class Title(models.Model):
 
     @property
     def rating(self):
-        rating = self.reviews.aggregate(Avg('score'))['score__avg']
-        return rating
+        return self.reviews.aggregate(Avg('score'))['score__avg']
     rating.fget.short_description = 'рейтинг'
 
     class Meta:

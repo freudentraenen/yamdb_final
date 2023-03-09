@@ -1,8 +1,7 @@
 import csv
 
 from django.core.management.base import BaseCommand
-
-from reviews.models import Category, Genre, Title, Review, Comment
+from reviews.models import Category, Comment, Genre, Review, Title
 from users.models import User
 
 
@@ -19,11 +18,11 @@ class Command(BaseCommand):
     }
 
     def handle(self, *args, **options):
-        for name, Model in self.filenames_models.items():
+        for name, model in self.filenames_models.items():
             objs = []
             with open((self.data_dir + name), encoding='utf-8') as f:
                 reader = csv.DictReader(f)
                 for row in reader:
-                    obj = Model(**row)
+                    obj = model(**row)
                     objs.append(obj)
-            Model.objects.bulk_create(objs)
+            model.objects.bulk_create(objs)
