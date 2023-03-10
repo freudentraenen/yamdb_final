@@ -221,3 +221,5 @@ PATCH /api/v1/titles/{titles_id}/
   "category": "string"
 }
 ```
+
+Страница с документацией: http://yatbepraktikum.hopto.org/redoc/
